@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcrvtoorvuf7b"]
+
+[ext_resource type="Script" path="res://Scripts/UI/IntEdit.gd" id="1_rrl6o"]
+
+[node name="Scene" type="Node2D"]
+
+[node name="IPInput" type="LineEdit" parent="."]
+offset_left = 900.0
+offset_top = 50.0
+offset_right = 1100.0
+offset_bottom = 81.0
+placeholder_text = "Server IP"
+
+[node name="PortInput" type="LineEdit" parent="."]
+offset_left = 900.0
+offset_top = 100.0
+offset_right = 1100.0
+offset_bottom = 131.0
+placeholder_text = "Server port"
+script = ExtResource("1_rrl6o")
+
+[connection signal="text_changed" from="PortInput" to="PortInput" method="_on_text_changed"]

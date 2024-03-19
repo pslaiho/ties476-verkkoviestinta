@@ -1,0 +1,97 @@
+[gd_scene load_steps=6 format=3 uid="uid://bcrvtoorvuf7b"]
+
+[ext_resource type="Script" path="res://Scripts/UI/IntEdit.gd" id="1_rrl6o"]
+[ext_resource type="Script" path="res://Scripts/UI/ConnectionHandler.gd" id="1_st850"]
+[ext_resource type="Script" path="res://Scripts/UI/ChangeInput.gd" id="2_8fpyg"]
+[ext_resource type="Script" path="res://Scripts/UI/ColorPicker.gd" id="4_3uqgg"]
+[ext_resource type="Script" path="res://ConnectButtonToggler.gd" id="4_onugv"]
+
+[node name="Scene" type="Node2D"]
+script = ExtResource("1_st850")
+
+[node name="Connection" type="Node" parent="."]
+
+[node name="IPInput" type="LineEdit" parent="Connection"]
+offset_left = 900.0
+offset_top = 50.0
+offset_right = 1100.0
+offset_bottom = 82.0
+placeholder_text = "Server IP"
+script = ExtResource("2_8fpyg")
+key = "ip_addr"
+
+[node name="PortInput" type="LineEdit" parent="Connection"]
+offset_left = 900.0
+offset_top = 100.0
+offset_right = 1100.0
+offset_bottom = 132.0
+placeholder_text = "Server port"
+script = ExtResource("1_rrl6o")
+
+[node name="NameInput" type="LineEdit" parent="Connection"]
+offset_left = 900.0
+offset_top = 150.0
+offset_right = 1100.0
+offset_bottom = 182.0
+placeholder_text = "Username"
+script = ExtResource("2_8fpyg")
+key = "username"
+restrict_regex = " |;"
+
+[node name="ConnectButton" type="Button" parent="Connection"]
+offset_left = 1000.0
+offset_top = 262.0
+offset_right = 1100.0
+offset_bottom = 294.0
+text = "Connect"
+script = ExtResource("4_onugv")
+
+[node name="PlayerColor" type="ColorPickerButton" parent="Connection"]
+offset_left = 900.0
+offset_top = 206.0
+offset_right = 1100.0
+offset_bottom = 238.0
+color = Color(1, 1, 1, 1)
+script = ExtResource("4_3uqgg")
+
+[node name="Messaging" type="Node" parent="."]
+
+[node name="MessageText" type="TextEdit" parent="Messaging"]
+offset_left = 64.0
+offset_top = 542.0
+offset_right = 576.0
+offset_bottom = 606.0
+placeholder_text = "Type message..."
+
+[node name="SendMessage" type="Button" parent="Messaging"]
+offset_left = 596.0
+offset_top = 542.0
+offset_right = 696.0
+offset_bottom = 606.0
+text = "Send"
+
+[node name="ChatBox" type="RichTextLabel" parent="Messaging"]
+offset_left = 64.0
+offset_top = 50.0
+offset_right = 576.0
+offset_bottom = 518.0
+bbcode_enabled = true
+
+[node name="UserList" type="RichTextLabel" parent="Messaging"]
+offset_left = 596.0
+offset_top = 50.0
+offset_right = 696.0
+offset_bottom = 518.0
+bbcode_enabled = true
+
+[connection signal="changed" from="Connection/IPInput" to="." method="update_info"]
+[connection signal="text_changed" from="Connection/IPInput" to="Connection/IPInput" method="_on_text_changed"]
+[connection signal="port_changed" from="Connection/PortInput" to="." method="update_info"]
+[connection signal="text_changed" from="Connection/PortInput" to="Connection/PortInput" method="_on_text_changed"]
+[connection signal="changed" from="Connection/NameInput" to="." method="update_info"]
+[connection signal="text_changed" from="Connection/NameInput" to="Connection/NameInput" method="_on_text_changed"]
+[connection signal="pressed" from="Connection/ConnectButton" to="." method="_on_connect_pressed"]
+[connection signal="changed" from="Connection/PlayerColor" to="." method="update_info"]
+[connection signal="color_changed" from="Connection/PlayerColor" to="Connection/PlayerColor" method="_color_changed"]
+[connection signal="focus_exited" from="Connection/PlayerColor" to="Connection/PlayerColor" method="_color_changed"]
+[connection signal="pressed" from="Messaging/SendMessage" to="." method="_send_message"]
